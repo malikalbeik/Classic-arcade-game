@@ -10,7 +10,7 @@ var Enemy = function(x, y) {
   this.y = y;
 
   //setting the speed of the object randomly between 100 and 150
-  this.speed = Math.random() * (150 - 100) + 100;
+  this.speed = Math.random() * (250 - 100) + 100;
 };
 
 // Update the enemy's position, required method for game
@@ -34,12 +34,69 @@ Enemy.prototype.render = function() {
 // a handleInput() method.
 var player = function() {
 
+  this.sprite = 'images/char-boy.png';
+  var self = this;
+
+  this.x = 200;
+  this.y = 400;
+
+  this.update = function() {
+    if (this.y < 0) {
+      self.x = 200;
+      self.y = 400;
+    }
+
+    allEnemies.forEach(function(enemy) {
+      if (self.x >= enemy.x - 50 && self.x <= enemy.x + 50) {
+        if (self.y >= enemy.y - 50 && self.y <= enemy.y + 50) {
+          self.x = 200;
+          self.y = 400;
+        }
+      }
+    });
+  };
+
+  this.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+  };
+
+  this.handleInput = function(e) {
+
+    //check the input and move the player.
+    if (e === 'left' && this.x > 0) {
+      this.x = this.x - 100;
+    }
+
+    if (e === 'right' && this.x < 400) {
+      this.x = this.x + 100;
+    }
+
+    if (e === 'up' && this.y > 0) {
+      this.y = this.y - 90;
+    }
+
+    if (e === 'down' && this.y < 400) {
+      this.y = this.y + 90;
+    }
+
+  };
+
+
+
+
 }
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
+var allEnemies = [
+  new Enemy(0, 50),
+  new Enemy(0, 140),
+  new Enemy(0, 230)
+]
+
+var player = new player();
 
 
 // This listens for key presses and sends the keys to your
