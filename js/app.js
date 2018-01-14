@@ -32,7 +32,7 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-var player = function() {
+var Player = function() {
 
   this.sprite = 'images/char-boy.png';
   var self = this;
@@ -96,7 +96,7 @@ var allEnemies = [
   new Enemy(0, 230)
 ]
 
-var player = new player();
+var player = new Player();
 
 
 // This listens for key presses and sends the keys to your
